@@ -1,10 +1,10 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse
-import json
-from .models import CartItem
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import CartItem
 
 
 
@@ -59,6 +59,16 @@ class ShoppingCartUpdate(View):
 
         data = {
             'message': f'item {item_id} has been updated.'
+        }
+        return JsonResponse(data)
+
+
+    def delete(self, request, item_id):
+        item = CartItem.objects.get(id=item_id)
+        item.delete()
+
+        data = {
+            'message': f'Item {item_id} has been deleted.'
         }
         return JsonResponse(data)
 
